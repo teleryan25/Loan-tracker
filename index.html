@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Loan Tracker">
+    <title>Loan Tracker</title>
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkxvYW4gVHJhY2tlciIsCiAgInNob3J0X25hbWUiOiAiTG9hbnMiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgInRoZW1lX2NvbG9yIjogIiM0QTkwRTIiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpwWlhkQ2IzZzlJakFnTUNBeE1qZ2dNVEk0SWo0OGNtVmpkQ0IzYVdSMGFEMGlNVEk0SWlCb1pXbG5hSFE5SWpFeU9DSWdabWxzYkQwaUl6UkJPVEJGTWlJdlBqeDBaWGgwSUhnOUlqWTBJaUI1UFNJM05DSWdabWxzYkQwaUkzZG1abVptWmlJZ1ptOXVkQzF6YVhwbFBTSTBOQ0lnWm05dWRDMTNaV2xuYUhROUltSnZiR1FpSUhSbGVIUXRZVzVqYUc5eVBTSnRhV1JrYkdVaVBpUThMM1JsZUhRK1BDOXpkbWMrIiwKICAgICAgInNpemVzIjogIjEyOHgxMjgiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfQogIF0KfQ==">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4A90E2;
+            --primary-dark: #357ABD;
+            --success: #5CB85C;
+            --warning: #F0AD4E;
+            --danger: #D9534F;
+            --text: #2C3E50;
+            --text-light: #7F8C8D;
+            --bg: #F8F9FA;
+            --card: #FFFFFF;
+            --border: #E0E0E0;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 80px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 30px 20px;
+            margin: -20px -20px 20px -20px;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 15px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: var(--text-light);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg);
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .stat-value.success {
+            color: var(--success);
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success) 0%, #4CAF50 100%);
+            transition: width 0.6s ease;
+            border-radius: 6px;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .chart-container {
+            height: 250px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        .payment-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 16px;
+        }
+
+        .payment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px;
+            background: var(--bg);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .payment-item.paid {
+            opacity: 0.6;
+            background: #E8F5E9;
+        }
+
+        .payment-item.extra {
+            background: #FFF3E0;
+            border-left: 4px solid var(--warning);
+        }
+
+        .payment-date {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .payment-amount {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            background: var(--card);
+            padding: 6px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-light);
+        }
+
+        .nav-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-top: 8px;
+            padding-top: 16px;
+            border-top: 2px solid var(--border);
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .summary-label {
+            color: var(--text-light);
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeIn 0.5s ease;
+        }
+
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            display: none;
+            z-index: 1000;
+        }
+
+        .install-prompt.show {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .extra-payment-form {
+            display: grid;
+            gap: 12px;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Loan Tracker</h1>
+            <p>Track your loan with beautiful insights</p>
+        </div>
+
+        <!-- Setup View -->
+        <div id="setupView" class="view active">
+            <div class="card">
+                <h2>⚙️ Loan Setup</h2>
+                <form id="setupForm">
+                    <div class="form-group">
+                        <label>Loan Name (optional)</label>
+                        <input type="text" id="loanName" placeholder="e.g., Dad's Loan">
+                    </div>
+                    <div class="form-group">
+                        <label>Loan Amount ($)</label>
+                        <input type="number" id="loanAmount" step="0.01" required placeholder="10000">
+                    </div>
+                    <div class="form-group">
+                        <label>Annual Interest Rate (%)</label>
+                        <input type="number" id="interestRate" step="0.01" required placeholder="5.0">
+                    </div>
+                    <div class="form-group">
+                        <label>Monthly Payment ($)</label>
+                        <input type="number" id="monthlyPayment" step="0.01" required placeholder="500">
+                    </div>
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="date" id="startDate" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        ✨ Create Loan Tracker
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main App View -->
+        <div id="appView" class="view">
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-view="overview">Overview</button>
+                <button class="nav-tab" data-view="payments">Payments</button>
+                <button class="nav-tab" data-view="charts">Charts</button>
+                <button class="nav-tab" data-view="settings">Settings</button>
+            </div>
+
+            <!-- Overview Tab -->
+            <div id="overviewTab" class="tab-content active">
+                <div class="card">
+                    <h2>📊 Loan Summary</h2>
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Remaining</div>
+                            <div class="stat-value" id="remainingBalance">$0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Paid</div>
+                            <div class="stat-value success" id="paidAmount">$0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total Interest</div>
+                            <div class="stat-value" id="totalInterest">$0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Payoff Date</div>
+                            <div class="stat-value" id="payoffDate" style="font-size: 14px;">-</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">0% Complete</div>
+                </div>
+
+                <div class="card">
+                    <h2>➕ Log Extra Payment</h2>
+                    <form id="extraPaymentForm" class="extra-payment-form">
+                        <div class="input-row">
+                            <div class="form-group" style="margin: 0;">
+                                <label>Amount ($)</label>
+                                <input type="number" id="extraAmount" step="0.01" required placeholder="100">
+                            </div>
+                            <div class="form-group" style="margin: 0;">
+                                <label>Date</label>
+                                <input type="date" id="extraDate" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            💵 Add Payment
+                        </button>
+                    </form>
+                </div>
+
+                <div class="card" id="recentPaymentsCard">
+                    <h2>📅 Recent Payments</h2>
+                    <div id="recentPayments"></div>
+                </div>
+            </div>
+
+            <!-- Payments Tab -->
+            <div id="paymentsTab" class="tab-content" style="display: none;">
+                <div class="card">
+                    <h2>📋 Full Payment Schedule</h2>
+                    <div class="payment-list" id="fullPaymentList"></div>
+                </div>
+            </div>
+
+            <!-- Charts Tab -->
+            <div id="chartsTab" class="tab-content" style="display: none;">
+                <div class="card">
+                    <h2>📈 Balance Over Time</h2>
+                    <div class="chart-container">
+                        <canvas id="balanceChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>🥧 Principal vs Interest</h2>
+                    <div class="chart-container">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settingsTab" class="tab-content" style="display: none;">
+                <div class="card">
+                    <h2>⚙️ Loan Settings</h2>
+                    <div id="loanSummary"></div>
+                    <button class="btn btn-secondary" id="editLoanBtn" style="margin-top: 16px;">
+                        ✏️ Edit Loan Details
+                    </button>
+                </div>
+                <div class="card">
+                    <h2>🔄 Extra Payments</h2>
+                    <div id="extraPaymentsList"></div>
+                </div>
+                <div class="card">
+                    <h2>🗑️ Reset</h2>
+                    <p style="margin-bottom: 16px; color: var(--text-light);">Clear all data and start fresh</p>
+                    <button class="btn btn-secondary" id="resetBtn">
+                        🔄 Reset All Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // State Management
+        let loanData = null;
+        let extraPayments = [];
+        let scheduleCache = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            setupEventListeners();
+            updateView();
+            
+            // Set default date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('extraDate').value = today;
+            document.getElementById('startDate').value = today;
+        });
+
+        function loadData() {
+            const stored = localStorage.getItem('loanData');
+            const storedPayments = localStorage.getItem('extraPayments');
+            
+            if (stored) {
+                loanData = JSON.parse(stored);
+            }
+            if (storedPayments) {
+                extraPayments = JSON.parse(storedPayments);
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('loanData', JSON.stringify(loanData));
+            localStorage.setItem('extraPayments', JSON.stringify(extraPayments));
+        }
+
+        function updateView() {
+            if (!loanData) {
+                document.getElementById('setupView').classList.add('active');
+                document.getElementById('appView').classList.remove('active');
+            } else {
+                document.getElementById('setupView').classList.remove('active');
+                document.getElementById('appView').classList.add('active');
+                calculateSchedule();
+                updateUI();
+            }
+        }
+
+        // Event Listeners
+        function setupEventListeners() {
+            document.getElementById('setupForm').addEventListener('submit', handleSetup);
+            document.getElementById('extraPaymentForm').addEventListener('submit', handleExtraPayment);
+            document.getElementById('editLoanBtn').addEventListener('click', editLoan);
+            document.getElementById('resetBtn').addEventListener('click', resetData);
+
+            // Tab navigation
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+                    
+                    e.target.classList.add('active');
+                    const view = e.target.dataset.view;
+                    document.getElementById(`${view}Tab`).style.display = 'block';
+                    
+                    if (view === 'charts') {
+                        setTimeout(updateCharts, 100);
+                    }
+                });
+            });
+        }
+
+        function handleSetup(e) {
+            e.preventDefault();
+            loanData = {
+                name: document.getElementById('loanName').value || 'My Loan',
+                amount: parseFloat(document.getElementById('loanAmount').value),
+                rate: parseFloat(document.getElementById('interestRate').value),
+                payment: parseFloat(document.getElementById('monthlyPayment').value),
+                startDate: document.getElementById('startDate').value
+            };
+            saveData();
+            updateView();
+        }
+
+        function handleExtraPayment(e) {
+            e.preventDefault();
+            const amount = parseFloat(document.getElementById('extraAmount').value);
+            const date = document.getElementById('extraDate').value;
+            
+            extraPayments.push({ amount, date });
+            extraPayments.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            saveData();
+            scheduleCache = null;
+            calculateSchedule();
+            updateUI();
+            
+            document.getElementById('extraPaymentForm').reset();
+            document.getElementById('extraDate').value = new Date().toISOString().split('T')[0];
+        }
+
+        function editLoan() {
+            document.getElementById('loanName').value = loanData.name;
+            document.getElementById('loanAmount').value = loanData.amount;
+            document.getElementById('interestRate').value = loanData.rate;
+            document.getElementById('monthlyPayment').value = loanData.payment;
+            document.getElementById('startDate').value = loanData.startDate;
+            
+            document.getElementById('appView').classList.remove('active');
+            document.getElementById('setupView').classList.add('active');
+        }
+
+        function resetData() {
+            if (confirm('Are you sure? This will delete all loan data and extra payments.')) {
+                localStorage.clear();
+                loanData = null;
+                extraPayments = [];
+                scheduleCache = null;
+                updateView();
+            }
+        }
+
+        // Loan Calculations
+        function calculateSchedule() {
+            if (scheduleCache) return scheduleCache;
+
+            const schedule = [];
+            let balance = loanData.amount;
+            let totalInterest = 0;
+            let totalPrincipal = 0;
+            const monthlyRate = loanData.rate / 100 / 12;
+            let currentDate = new Date(loanData.startDate);
+            
+            // Track extra payments
+            let extraPaymentIndex = 0;
+            
+            while (balance > 0.01) {
+                // Calculate interest for the month
+                const interestPayment = balance * monthlyRate;
+                let principalPayment = loanData.payment - interestPayment;
+                
+                // Check if we need to apply extra payment this month
+                let extraThisMonth = 0;
+                while (extraPaymentIndex < extraPayments.length) {
+                    const extraDate = new Date(extraPayments[extraPaymentIndex].date);
+                    const paymentDate = new Date(currentDate);
+                    
+                    if (extraDate.getFullYear() === paymentDate.getFullYear() && 
+                        extraDate.getMonth() === paymentDate.getMonth()) {
+                        extraThisMonth += extraPayments[extraPaymentIndex].amount;
+                        extraPaymentIndex++;
+                    } else if (extraDate < paymentDate) {
+                        extraPaymentIndex++;
+                    } else {
+                        break;
+                    }
+                }
+                
+                principalPayment += extraThisMonth;
+                
+                // Final payment adjustment
+                if (principalPayment > balance) {
+                    principalPayment = balance;
+                }
+                
+                balance -= principalPayment;
+                totalInterest += interestPayment;
+                totalPrincipal += principalPayment;
+                
+                schedule.push({
+                    date: new Date(currentDate),
+                    payment: principalPayment + interestPayment,
+                    principal: principalPayment,
+                    interest: interestPayment,
+                    balance: Math.max(0, balance),
+                    extra: extraThisMonth
+                });
+                
+                // Move to next month
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                
+                // Safety check
+                if (schedule.length > 600) break;
+            }
+            
+            scheduleCache = {
+                schedule,
+                totalInterest,
+                totalPrincipal,
+                totalPayments: schedule.length
+            };
+            
+            return scheduleCache;
+        }
+
+        // UI Updates
+        function updateUI() {
+            const calc = calculateSchedule();
+            const today = new Date();
+            const paidPayments = calc.schedule.filter(p => p.date <= today);
+            const remaining = calc.schedule.filter(p => p.date > today);
+            
+            const paidAmount = paidPayments.reduce((sum, p) => sum + p.principal, 0);
+            const paidInterest = paidPayments.reduce((sum, p) => sum + p.interest, 0);
+            const remainingBalance = remaining.length > 0 ? remaining[0].balance + remaining[0].principal : 0;
+            const payoffDate = calc.schedule[calc.schedule.length - 1]?.date;
+            
+            // Update stats
+            document.getElementById('remainingBalance').textContent = formatCurrency(remainingBalance);
+            document.getElementById('paidAmount').textContent = formatCurrency(paidAmount);
+            document.getElementById('totalInterest').textContent = formatCurrency(calc.totalInterest);
+            document.getElementById('payoffDate').textContent = payoffDate ? formatDate(payoffDate) : '-';
+            
+            // Update progress
+            const progress = (paidAmount / loanData.amount) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${progress.toFixed(1)}% Complete`;
+            
+            // Update payment lists
+            updateRecentPayments(calc.schedule);
+            updateFullPaymentList(calc.schedule);
+            updateLoanSummary();
+            updateExtraPaymentsList();
+        }
+
+        function updateRecentPayments(schedule) {
+            const today = new Date();
+            const recent = schedule.filter(p => {
+                const diff = Math.abs(p.date - today);
+                const days = diff / (1000 * 60 * 60 * 24);
+                return days <= 90;
+            }).slice(0, 5);
+            
+            const html = recent.map(p => {
+                const isPaid = p.date <= today;
+                const classes = `payment-item ${isPaid ? 'paid' : ''} ${p.extra > 0 ? 'extra' : ''}`;
+                return `
+                    <div class="${classes}">
+                        <span class="payment-date">${formatDate(p.date)}</span>
+                        <span class="payment-amount">${formatCurrency(p.payment)}</span>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('recentPayments').innerHTML = html || '<p style="color: var(--text-light); text-align: center;">No recent payments</p>';
+        }
+
+        function updateFullPaymentList(schedule) {
+            const today = new Date();
+            const html = schedule.map(p => {
+                const isPaid = p.date <= today;
+                const classes = `payment-item ${isPaid ? 'paid' : ''} ${p.extra > 0 ? 'extra' : ''}`;
+                return `
+                    <div class="${classes}">
+                        <div>
+                            <div class="payment-date">${formatDate(p.date)}</div>
+                            <div style="font-size: 12px; color: var(--text-light);">
+                                Principal: ${formatCurrency(p.principal)} | Interest: ${formatCurrency(p.interest)}
+                                ${p.extra > 0 ? ` | Extra: ${formatCurrency(p.extra)}` : ''}
+                            </div>
+                        </div>
+                        <span class="payment-amount">${formatCurrency(p.payment)}</span>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('fullPaymentList').innerHTML = html;
+        }
+
+        function updateLoanSummary() {
+            const calc = calculateSchedule();
+            const html = `
+                <div class="summary-row">
+                    <span class="summary-label">Loan Name</span>
+                    <span class="summary-value">${loanData.name}</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Original Amount</span>
+                    <span class="summary-value">${formatCurrency(loanData.amount)}</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Interest Rate</span>
+                    <span class="summary-value">${loanData.rate}%</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Monthly Payment</span>
+                    <span class="summary-value">${formatCurrency(loanData.payment)}</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Start Date</span>
+                    <span class="summary-value">${formatDate(new Date(loanData.startDate))}</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Total Payments</span>
+                    <span class="summary-value">${calc.totalPayments} months</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Total Amount</span>
+                    <span class="summary-value">${formatCurrency(loanData.amount + calc.totalInterest)}</span>
+                </div>
+            `;
+            document.getElementById('loanSummary').innerHTML = html;
+        }
+
+        function updateExtraPaymentsList() {
+            if (extraPayments.length === 0) {
+                document.getElementById('extraPaymentsList').innerHTML = '<p style="color: var(--text-light); text-align: center;">No extra payments yet</p>';
+                return;
+            }
+            
+            const html = extraPayments.map((p, i) => `
+                <div class="payment-item extra">
+                    <span class="payment-date">${formatDate(new Date(p.date))}</span>
+                    <span class="payment-amount">${formatCurrency(p.amount)}</span>
+                </div>
+            `).join('');
+            
+            document.getElementById('extraPaymentsList').innerHTML = html;
+        }
+
+        // Charts
+        let balanceChartInstance = null;
+        let pieChartInstance = null;
+
+        function updateCharts() {
+            const calc = calculateSchedule();
+            
+            // Balance over time chart
+            const ctx1 = document.getElementById('balanceChart');
+            if (balanceChartInstance) balanceChartInstance.destroy();
+            
+            balanceChartInstance = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: calc.schedule.map(p => formatDate(p.date)),
+                    datasets: [{
+                        label: 'Balance',
+                        data: calc.schedule.map(p => p.balance),
+                        borderColor: '#4A90E2',
+                        backgroundColor: 'rgba(74, 144, 226, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: value => '$' + value.toLocaleString()
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                maxTicksLimit: 6
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Pie chart
+            const ctx2 = document.getElementById('pieChart');
+            if (pieChartInstance) pieChartInstance.destroy();
+            
+            pieChartInstance = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Principal', 'Interest'],
+                    datasets: [{
+                        data: [calc.totalPrincipal, calc.totalInterest],
+                        backgroundColor: ['#5CB85C', '#F0AD4E']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Utilities
+        function formatCurrency(amount) {
+            return '$' + amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        // PWA Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swCode = `
+                    self.addEventListener('install', (e) => {
+                        e.waitUntil(
+                            caches.open('loan-tracker-v1').then((cache) => {
+                                return cache.addAll(['/']);
+                            })
+                        );
+                    });
+                    
+                    self.addEventListener('fetch', (e) => {
+                        e.respondWith(
+                            caches.match(e.request).then((response) => {
+                                return response || fetch(e.request);
+                            })
+                        );
+                    });
+                `;
+                
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+                
+                navigator.serviceWorker.register(swUrl);
+            });
+        }
+    </script>
+</body>
+</html>
